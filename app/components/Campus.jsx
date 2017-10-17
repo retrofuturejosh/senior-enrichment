@@ -9,10 +9,19 @@ export default class Campus extends Component {
         this.state = {
             campusNameEntry: '',
             redirect: false,
-            campusId: ''
+            campusId: '',
+            campuses: []
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+    }
+
+    componentDidMount () {
+        axios.get('/api/campus')
+        .then(res => res.data)
+        .then(campuses => {
+            this.setState({ campuses })
+        })
     }
 
     handleSubmit (e) {
@@ -27,7 +36,6 @@ export default class Campus extends Component {
 
     handleChange (e) {
         this.setState({campusNameEntry : e.target.value})
-        console.log(this.state.campusNameEntry)
     }
       
 
@@ -40,7 +48,7 @@ export default class Campus extends Component {
                     <h1>Campuses</h1>
                     <ul>
                         {
-                            this.props.campuses.map(campus => {
+                            this.state.campuses.map(campus => {
                                 return (
                                     <li key={campus.id} ><Link to={`/campus/${campus.id}`}>{ campus.name }</Link></li>
                                 )

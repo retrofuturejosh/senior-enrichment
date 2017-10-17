@@ -5,7 +5,18 @@ import { Link } from 'react-router-dom';
 export default class Campus extends Component {
     constructor (props) {
         super(props)
+        this.state = {
+            students: []
+        }
     }
+
+    componentDidMount () {
+        axios.get('/api/student')
+        .then(res => res.data)
+        .then(students => {
+            this.setState({ students })
+        })
+      }
 
     render (props) { 
         return (
@@ -13,7 +24,7 @@ export default class Campus extends Component {
                 <h1>Students</h1>
                 <ul>
                     {
-                        this.props.students.map(student => {
+                        this.state.students.map(student => {
                             return (
                                 <li key={student.id} ><Link to={`/student/${student.id}`}>{ student.name }</Link></li>
                             )

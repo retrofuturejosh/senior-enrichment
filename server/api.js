@@ -13,7 +13,6 @@ api.get('/hello', (req, res, next) => res.send({hello: 'world'}))
 
 //GET ONE CAMPUS
 api.get('/campus/:id', (req, res, next) => {
-	console.log('CAMPUS ID IS ', req.params.id);
 	let id = req.params.id;
 	Campus.findById(id)
 	.then(campus => res.json(campus))
