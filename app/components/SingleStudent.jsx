@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router'
 
-let savedCampusId = null;
+let savedName = null;
 
 export default class SingleStudent extends Component {
     constructor(props) {
@@ -21,16 +21,8 @@ export default class SingleStudent extends Component {
         let studentPromise = axios.get(`/api/student/${studentId}`)
         .then(res => res.data)
         .then(student => {
-            this.setState({ student })
-            return student.campusId;
-        })
-        .then(campusId => {
-            savedCampusId = campusId
-            return axios.get(`/api/campus/${campusId}`)
-        })
-        .then(res => res.data)
-        .then(campus => {
-            this.setState({campus})
+            this.setState({ student, campus: student.campus })
+            savedName = student.name;
         })
         .catch(error => console.log('BUMMER ', error));
 
@@ -49,9 +41,9 @@ export default class SingleStudent extends Component {
     render(props) {
 
         if(this.state.redirect) {
-            if (savedCampusId === null){
+            if (savedName === null){
                 return <Redirect to={`/`}/>;
-            } else return <Redirect to={`/campus/${savedCampusId}`}/>;
+            } else return <Redirect to={`/studentremoved/${savedName}`}/>;
         } else return (
             <div>
                 <h1>{this.state.student.name}</h1>
@@ -63,10 +55,12 @@ export default class SingleStudent extends Component {
                     </ul>
                 </div>
                 <div>
-                    <button onClick={this.handleDelete}> DELETE STUDENT </button>
-                </div>
-                <div>
                     <Link to={`/student/edit/${this.state.student.id}`}><button> EDIT STUDENT </button></Link> 
+                </div>
+                <br />
+                <br />
+                <div>
+                    <button onClick={this.handleDelete}> DELETE STUDENT </button>
                 </div>
             </div>
         )

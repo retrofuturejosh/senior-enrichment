@@ -78,22 +78,33 @@ export default class EditStudent extends Component {
             <div>
             <form onSubmit={this.handleSubmit}>
                 <fieldset>
+                    First Name
+                    <br />
                     <input type="text" name="firstName" placeholder="First Name" autoComplete="off"
                     onChange={(e) => this.handleChange("firstName", e)}
                     value={this.state.firstName}></input>
+                    <br />
+                    Last Name
                     <br />
                     <input type="text" name="lastName" placeholder="Last Name" autoComplete="off"
                     onChange={(e) => this.handleChange("lastName", e)}
                     value={this.state.lastName}></input>
                     <br />
+                    Email
+                    <br />
                     <input type="text" name="email" placeholder="Email"autoComplete="off"
                     onChange={(e) => this.handleChange("email", e)}
                     value={this.state.email}></input>
                     <br />
+                    GPA
+                    <br />
                     <input type="number" step="0.01" name="GPA" placeholder="GPA" autoComplete="off" onChange={(e) => this.handleChange("gpa", e)}
                     value={this.state.gpa}></input>
                     <br />
+                    Select Campus
+                    <br />
                     <select name="campus" onChange={(e) => this.handleChange("campusId", e)}>
+                    <option value="" disabled selected>Select Campus</option>
                         {
                             this.state.campuses.map(campus => {
                                 if (campus.id === this.state.student.campusId){

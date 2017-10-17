@@ -10,7 +10,8 @@ export default class Campus extends Component {
             campusNameEntry: '',
             redirect: false,
             campusId: '',
-            campuses: []
+            campuses: [],
+            campusImg: ''
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -27,15 +28,18 @@ export default class Campus extends Component {
     handleSubmit (e) {
         e.preventDefault();
         let campusName = this.state.campusNameEntry;
-        axios.post("/api/campus", { name: campusName })
+        let campusImg = this.state.campusImg;
+        axios.post("/api/campus", { name: campusName, image: campusImg })
         .then(campus => {
             console.log('posted! ', campus.data.id);
             this.setState({campusId: campus.data.id, redirect: true});
         })
     }
 
-    handleChange (e) {
-        this.setState({campusNameEntry : e.target.value})
+    handleChange (category, e) {
+        this.setState({
+            [category]: e.target.value
+        })
     }
       
 
@@ -44,6 +48,18 @@ export default class Campus extends Component {
             return <Redirect to={`/campus/${this.state.campusId}`}/>;
         } else return (
             <div>
+                <div>
+                    <h2>Add Campus</h2>
+                    <form onSubmit={this.handleSubmit}>
+                        <fieldset>
+                            <input type="text" name="campusName" placeholder="Campus Name" autoComplete="off" onChange={(e) => this.handleChange("campusNameEntry", e)} value={this.state.campusNameEntry}></input>
+                            <br />
+                            <input type="text" name="campusImg" placeholder="Campus Image Link" autoComplete="off" onChange={(e) => this.handleChange("campusImg", e)} value={this.state.campusImg}></input>
+                            <br />
+                            <input type="submit"></input>
+                        </fieldset>
+                    </form>
+                </div>
                 <div>
                     <h1>Campuses</h1>
                     <ul>
@@ -55,17 +71,6 @@ export default class Campus extends Component {
                             }
                         )}
                     </ul>
-                </div>
-
-                <div>
-                    <h2>Add Campus</h2>
-                    <form onSubmit={this.handleSubmit}>
-                        <fieldset>
-                            <input type="text" name="campusName" placeholder="Campus Name" autoComplete="off" onChange={this.handleChange} value={this.state.campusNameEntry}></input>
-                            <br />
-                            <input type="submit"></input>
-                        </fieldset>
-                    </form>
                 </div>
             </div>
         )

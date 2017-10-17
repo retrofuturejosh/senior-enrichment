@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router';
 
 let savedCampusName;
 
@@ -116,6 +116,7 @@ export default class SingleCampus extends Component {
             <div>
                 <div>
                     <h1>{this.state.campus.name}</h1>
+                    <img src={this.state.campus.image} style={{"maxWidth": "300px", "maxHeight": "300px"}} />
                     <div style={{"width": "50%"}}>
                         <h3>STUDENTS</h3>
                         <div>
@@ -150,20 +151,29 @@ export default class SingleCampus extends Component {
                             onChange={(e) => this.handleChange("firstName", e)}
                             value={this.state.firstName}></input>
                             <br />
+                            <br />
                             <input type="text" name="lastName" placeholder="Last Name" autoComplete="off"
                             onChange={(e) => this.handleChange("lastName", e)}
                             value={this.state.lastName}></input>
+                            <br />
                             <br />
                             <input type="text" name="email" placeholder="Email"autoComplete="off"
                             onChange={(e) => this.handleChange("email", e)}
                             value={this.state.email}></input>
                             <br />
+                            <br />
                             <input type="number" step="0.01" name="GPA" placeholder="GPA" autoComplete="off" onChange={(e) => this.handleChange("gpa", e)}
                             value={this.state.gpa}></input>
+                            <br />
                             <br />
                             <input type="submit"></input>
                         </fieldset>
                     </form>
+                </div>
+                <br />
+                <br />
+                <div>
+                    <Link to={`/campus/edit/${this.state.campus.id}`}><button> EDIT CAMPUS </button> </Link>
                 </div>
                 <br />
                 <br />

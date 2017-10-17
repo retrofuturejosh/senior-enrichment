@@ -5,7 +5,7 @@ import axios from 'axios'
 const Navbar = () => {
     return (
         <div>
-            <Link to ="/campus">CAMPUSES</Link>
+            <Link to ="/">HOME</Link>
             <br />
             <Link to ="/student">STUDENTS</Link>
         </div>

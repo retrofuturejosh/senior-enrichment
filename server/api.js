@@ -37,14 +37,14 @@ api.get('/student/campus/:campusid', (req, res, next) => {
 //GET ONE STUDENT
 api.get('/student/:id', (req, res, next) => {
 	let id = req.params.id;
-	Student.findById(id)
+	Student.findById(id, {include : [{model: Campus}]})
 	.then(student => res.json(student))
 	.catch(error => console.log(error))
 })
 
 //GET ALL STUDENTS
 api.get('/student', (req, res, next) => {
-	Student.findAll()
+	Student.findAll({include : [{model: Campus}]})
 	.then(students => res.json(students))
 	.catch(error => console.log(error))
 })
