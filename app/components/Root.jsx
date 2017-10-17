@@ -8,6 +8,7 @@ import SingleCampus from './SingleCampus';
 import SingleStudent from './SingleStudent';
 import CampusRemoved from './CampusRemoved';
 import Navbar from './navbar';
+import EditStudent from './EditStudent'
 
 const Root = (props) => {
     
@@ -17,6 +18,7 @@ const Root = (props) => {
                 <Switch>
                     <Route path="/home" component={Home}/>
                     <Route exact path="/campus" component={Campus}/>
+                    <Route path="/student/edit/:id" component={EditStudent}/>
                     <Route path="/student/:id" component={SingleStudent}/>
                     <Route path="/campus/:id" component={SingleCampus} />
                     <Route path="/student/" component={Student}/>

@@ -43,7 +43,7 @@ export default class SingleCampus extends Component {
             this.fetchStudents(campusId);
         })
         .catch(error => {
-            console.log("heeeeeeeey")
+            console.log('Oops! Someone goofed!')
         })
 
     }

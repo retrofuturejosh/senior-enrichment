@@ -65,6 +65,9 @@ export default class SingleStudent extends Component {
                 <div>
                     <button onClick={this.handleDelete}> DELETE STUDENT </button>
                 </div>
+                <div>
+                    <Link to={`/student/edit/${this.state.student.id}`}><button> EDIT STUDENT </button></Link> 
+                </div>
             </div>
         )
     }
