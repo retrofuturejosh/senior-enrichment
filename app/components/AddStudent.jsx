@@ -38,13 +38,18 @@ export default class AddStudent extends Component {
     handleSubmit(e) {
         e.preventDefault();
         let fetchStudents = this.props.fetchStudents;
-        let fetchPromise
+        let fetchPromise, campusId, gpa;
+        if (this.state.gpa === '') gpa = 0.0;
+        else gpa = this.state.gpa;
+        if (this.state.campusId === '') campusId = null;
+        else campusId = this.state.campusId;
         let newStudent = {
             name: this.state.firstName + ' ' + this.state.lastName,
             email: this.state.email,
-            gpa: this.state.gpa,
-            campusId: this.state.campusId
+            gpa,
+            campusId
         }
+        console.log(newStudent)
         let clearStudent = {
             firstName: '',
             lastName: '',

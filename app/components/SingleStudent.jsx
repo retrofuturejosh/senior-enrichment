@@ -31,7 +31,6 @@ export default class SingleStudent extends Component {
     handleDelete(e) {
         e.preventDefault();
         let studentId = this.state.student.id;
-        let savedId = this.state.campus.id
         axios.delete(`/api/student/${studentId}`)
             .then(student => {
                 this.setState({ redirect: true })
@@ -59,7 +58,9 @@ export default class SingleStudent extends Component {
                     <br />
                     <div id="single-student-info">
                         <ul>
-                            <li>Campus: <Link to={`/campus/${this.state.campus.id}`}>{this.state.campus.name} </Link></li>
+                            {
+                                (this.state.campus) ? <li>Campus: <Link to={`/campus/${this.state.campus.id}`}>{this.state.campus.name} </Link></li> : <li>No Campus Assigned</li>
+                            }
                             <li>Email: <a href={`mailto:${this.state.student.email}`}> {this.state.student.email} </a></li>
                             <li>GPA: {this.state.student.gpa} </li>
                         </ul>

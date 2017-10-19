@@ -10,7 +10,10 @@ const Students = db.define("students", {
     type: Sequelize.STRING,
     validate: { isEmail: true }
   },
-  gpa: Sequelize.FLOAT
+  gpa: {
+    type: Sequelize.FLOAT,
+    defaultValue: 0.00
+  }
 });
 
 module.exports = Students;

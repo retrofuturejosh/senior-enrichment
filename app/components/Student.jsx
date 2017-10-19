@@ -42,8 +42,8 @@ export default class Campus extends Component {
 
     organizeStudents(students) {
         return students.sort((a, b) => {
-            let lastNameA = a.name.split(' ')[1];
-            let lastNameB = b.name.split(' ')[1];
+            let lastNameA = a.name.split(' ')[1].toUpperCase();
+            let lastNameB = b.name.split(' ')[1].toUpperCase();
             return (lastNameA > lastNameB) ? 1 : ((lastNameB > lastNameA) ? -1 : 0);
         });
     }
