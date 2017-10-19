@@ -63,13 +63,16 @@ export default class Campus extends Component {
                             <h1>Students</h1>
                         </div>
                         <table style={{ width: "95%" }}>
-                            <tr>
-                                <th>Student</th>
-                                <th>Campus</th>
-                                <th>Email</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                            </tr>
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Campus</th>
+                                    <th>Email</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                             {
                                 this.state.students.map(student => {
                                     if (student.campus) {
@@ -95,6 +98,7 @@ export default class Campus extends Component {
                                     }
                                 }
                                 )}
+                            </tbody>
                         </table>
                     </div>
                 </div>

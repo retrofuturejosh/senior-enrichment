@@ -54,13 +54,13 @@ export default class Campus extends Component {
                         <h2>Add Campus</h2>
                         <form onSubmit={this.handleSubmit}>
                             <fieldset>
-                                <input type="text" name="campusName" placeholder="Campus Name" autoComplete="off" onChange={(e) => this.handleChange("campusNameEntry", e)} value={this.state.campusNameEntry}></input>
+                                <input id="expand-input-100" type="text" name="campusName" placeholder="Campus Name" autoComplete="off" onChange={(e) => this.handleChange("campusNameEntry", e)} value={this.state.campusNameEntry}></input>
                                 <br />
                                 <br />
-                                <input type="text" name="campusImg" placeholder="Campus Image Link" autoComplete="off" onChange={(e) => this.handleChange("campusImg", e)} value={this.state.campusImg}></input>
+                                <input id="expand-input-100"type="text" name="campusImg" placeholder="Campus Image Link" autoComplete="off" onChange={(e) => this.handleChange("campusImg", e)} value={this.state.campusImg}></input>
                                 <br />
                                 <br />
-                                <input type="submit"></input>
+                                <input id="expand-input-100" className="button" type="submit"></input>
                             </fieldset>
                         </form>
                     </div>

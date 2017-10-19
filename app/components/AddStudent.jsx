@@ -14,7 +14,8 @@ export default class AddStudent extends Component {
             lastName: '',
             email: '',
             gpa: '',
-            campusId: ''
+            campusId: '',
+            errors: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -54,6 +55,11 @@ export default class AddStudent extends Component {
         axios.post("/api/student", newStudent)
             .then(student => {
                 console.log('posted! ', student.data);
+                if (student.data.errors) {
+                    this.setState({errors: true})
+                } else {
+                    this.setState({errors: false})
+                }
                 return fetchStudents();
             })
             .then(() => {
@@ -87,7 +93,7 @@ export default class AddStudent extends Component {
                             value={this.state.gpa}></input>
                         <br />
                         <br />
-                        <select name="campus" onChange={(e) => this.handleChange("campusId", e)}>
+                        <select id="expand-input" name="campus" onChange={(e) => this.handleChange("campusId", e)}>
                             <option value="" disabled selected>Select Campus</option>
                             {
                                 this.state.campuses.map(campus => {
@@ -97,10 +103,17 @@ export default class AddStudent extends Component {
                         </select>
                         <br />
                         <br />
-                        <input className="button" type="submit"></input>
+                        <input id="expand-input" className="button" type="submit"></input>
                         <br />
                         <br />
                     </fieldset>
+                    {
+                        (this.state.errors) ? (
+                            <div>
+                                Valid email is required to add student.
+                            </div>
+                        ) : null
+                    }
                 </form>
             </div>
         )

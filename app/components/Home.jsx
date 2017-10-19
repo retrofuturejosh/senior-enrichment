@@ -1,21 +1,37 @@
 import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import axios from 'axios'
 
-export default class Home extends Component {
 
-    constructor() {
-        super()
-        this.state = {
-            campuses: []
-        }
+import { fetchCampusesThunk } from '../reducers/campus';
+import store from '../store'
+
+const mapStateToProps = function (state) {
+    return {
+        campuses: state.campuses
     }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {fetchCampusesThunk }
+}
+
+class Home extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = store.getState();
+    }
+
     componentDidMount() {
-        axios.get('/api/campus')
-            .then(res => res.data)
-            .then(campuses => {
-                this.setState({ campuses })
-            })
+        const campusesThunk = this.props.fetchCampusesThunk();
+        let storePromise = store.dispatch(campusesThunk);
+        storePromise.then(()=> {
+            this.setState(store.getState())
+        })
     }
 
     render() {
@@ -24,19 +40,22 @@ export default class Home extends Component {
                 <div>
                     <div id="campus-top">
                         <h3 id="campus-float">Campuses</h3>
-                        <Link to="/campus"><button id="float-right">Add Campus</button></Link>
+                        <Link to="/campus"><button className="float-right" id="expand-input-40">Add Campus</button></Link>
                     </div>
                     <br />
                     <table id="campus-table" style={{ "width": "75%" }}>
+                        <thead>
                         <tr>
                             <th>Campus</th>
                             <th>Edit Campus Info</th>
                             <th>Add/Remove Students</th>
                         </tr>
+                        </thead>
+                        <tbody>
                         {
                             this.state.campuses.map(campus => {
                                 return (
-                                    <tr id={campus.id}>
+                                    <tr key={campus.id}>
                                         <td key={campus.id} ><Link to={`/campus/${campus.id}`}>{campus.name}</Link></td>
                                         <td><Link to={`/campus/edit/${campus.id}`}><button >Edit Campus</button></Link></td>
                                         <td><Link to={`/campus/${campus.id}`}><button >Add/Remove</button></Link></td>
@@ -44,6 +63,7 @@ export default class Home extends Component {
                                 )
                             }
                             )}
+                            </tbody>
                     </table>
                 </div>
                 <br />
@@ -52,3 +72,7 @@ export default class Home extends Component {
         )
     }
 }
+
+const HomeContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));
+
+export default HomeContainer

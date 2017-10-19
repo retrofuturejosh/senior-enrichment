@@ -43,8 +43,13 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
 	Student.create(req.body)
 		.then(student => res.json(student))
-		.then(() => console.log('successfully added new student ', req.body.name))
-		.catch(error => console.log(error))
+		.then(() => {
+			console.log('successfully added new student ', req.body)
+		})
+		.catch(error => {
+			console.log(error)
+			res.send(error);
+		})
 })
 
 
@@ -70,13 +75,15 @@ router.delete('/:id', (req, res, next) => {
 	let id = req.params.id;
 	Student.findById(id)
 		.then(student => {
-			return student.destroy()
+			student.destroy()
 		})
 		.then(() => {
 			console.log('successfully removed student');
 			res.send('Successfully removed student');
 		})
-		.catch(error => console.log(error))
+		.catch(error => {
+			return res.send(error);
+		})
 })
 
 module.exports = router;

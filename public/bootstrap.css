@@ -8191,7 +8191,7 @@ a.text-dark:focus, a.text-dark:hover {
   padding: 8px 5px 8px 5px;
   border-bottom-style: solid;
   
-  border-width: 2px;
+  border-width: 1px;
   border-radius: 8px;
   border-color: #4e5261;
   position:fixed;
@@ -8199,10 +8199,10 @@ a.text-dark:focus, a.text-dark:hover {
   font-size: 23px;
   display: block;
   background: rgba(228, 228, 228, 0.452);; /* For browsers that do not support gradients */
-  background: -webkit-linear-gradient(top, rgb(228, 228, 228), rgba(196, 199, 207, 0.692)); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(bottom, rgb(228, 228, 228), rgba(196, 199, 207, 0.692)); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(bottom, rgb(228, 228, 228), rgba(196, 199, 207, 0.692)); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to bottom, rgb(228, 228, 228), rgba(196, 199, 207, 0.692)); /* Standard syntax */
+  background: -webkit-linear-gradient(top, rgb(252, 252, 252), rgba(221, 221, 221, 0.767)); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom, rgb(245, 245, 245), rgba(221, 221, 221, 0.767)); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom, rgb(247, 247, 247), rgba(221, 221, 221, 0.767)); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom, rgb(248, 248, 248), rgba(221, 221, 221, 0.767)); /* Standard syntax */
 }
 
 #grad {
@@ -8369,6 +8369,7 @@ ul {
   margin-top: 7px;
   margin-left: 20px;
   z-index: 1;
+  width: 30%
 }
 
 #campus-button-delete:hover {
@@ -8477,22 +8478,23 @@ table {
 }
 
 #add-campus {
-  width: 75%;
+  width: 90%;
   margin: auto;
   margin-top: 100px;
 }
 
 #add-campus-list {
   float: right;
-  margin-right: 100px;
+  margin-right: 10%;
 }
 
 #add-campus-form {
   float: left;
+  width: 45%;
 }
 
 #add-campus-list-header{
-  margin-left: 38px;
+  margin-left: 5%;
 }
 
 #component-removed {
@@ -8513,11 +8515,11 @@ table {
   margin-top: 100px;
 }
 
-#delete-student-button {
+.delete-student-button {
   float: right;
 }
 
-#delete-student-button:hover {
+.delete-student-button:hover {
   background-color: red;
 }
 
@@ -8558,4 +8560,36 @@ fieldset {
 
 #expand-input {
   width: 85%
+}
+
+.edit-delete {
+  float: right;
+}
+
+.edit-delete:hover {
+  background-color: red;
+}
+
+#expand-input-half {
+  width: 30%
+}
+
+#expand-input-40{
+  width: 40%
+}
+
+#expand-input-50{
+  width: 50%
+}
+
+.floatright {
+  float: right;
+}
+
+#expand-input-100{
+  width: 90%
+}
+
+#campus-student-list {
+  margin-left: 10%;
 }

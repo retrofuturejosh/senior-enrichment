@@ -14,7 +14,8 @@ export default class SingleCampus extends Component {
             firstName: '',
             lastName: '',
             email: '',
-            gpa: ''
+            gpa: '',
+            error: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -70,6 +71,10 @@ export default class SingleCampus extends Component {
         let newStudentPromise = axios.post("/api/student", newStudent)
             .then(student => {
                 console.log('posted! ', student.data);
+                if (student.data.errors){
+                    this.setState({error: student.data.errors[0].message})
+                }
+                else this.setState({error: false})
             })
             .then(() => {
                 this.fetchStudents(campusId);
@@ -107,8 +112,10 @@ export default class SingleCampus extends Component {
         savedCampusName = this.state.campus.name;
         axios.delete(`/api/campus/${campusId}`)
             .then(success => {
-                console.log('success ', success)
                 this.setState({ redirect: true })
+            })
+            .catch(error => {
+                console.log(error);
             })
     }
 
@@ -119,7 +126,12 @@ export default class SingleCampus extends Component {
         }
 
         if (this.state.campus.id === undefined) {
-            return <h1>No Campus Found</h1>
+            return (<div id="current-component">
+                        <div id="singlecampus-top">
+                            <h1>No Campus Found</h1>
+                        </div>
+                    </div>
+                )
         }
 
         return (
@@ -135,7 +147,13 @@ export default class SingleCampus extends Component {
                     <img id="campus-image" src={this.state.campus.image} />
                     <div id="student-list">
                         <div id="campus-student-list">
-
+                            {
+                                (this.state.error) ? (
+                                    <div>
+                                        Unable to add student. Valid email is required.
+                                    </div>
+                                ) : null
+                            }
 
                             {
                                 (this.state.students.length) ? (
@@ -144,10 +162,11 @@ export default class SingleCampus extends Component {
                                             <h3>Enrolled Students</h3>
                                         </div>
                                         <table id="single-campus-student-list">
+                                            <tbody>
                                             {
                                                 this.state.students.map((student, idx) => {
                                                     return (
-                                                        <tr>
+                                                        <tr key={idx}>
                                                             <td className="student-list-td" key={student.id}>
                                                                 <Link to={`/student/${student.id}`} key={student.id}>
                                                                     {student.name}
@@ -163,6 +182,7 @@ export default class SingleCampus extends Component {
                                                     )
                                                 })
                                             }
+                                            </tbody>
                                         </table>
                                     </div>
                                 ) : (
@@ -182,26 +202,26 @@ export default class SingleCampus extends Component {
                     <h3>Add Student</h3>
                     <form onSubmit={this.handleSubmit}>
                         <fieldset>
-                            <input type="text" name="firstName" placeholder="First Name" autoComplete="off"
+                            <input id="expand-input-half" type="text" name="firstName" placeholder="First Name" autoComplete="off"
                                 onChange={(e) => this.handleChange("firstName", e)}
                                 value={this.state.firstName}></input>
                             <br />
                             <br />
-                            <input type="text" name="lastName" placeholder="Last Name" autoComplete="off"
+                            <input id="expand-input-half" type="text" name="lastName" placeholder="Last Name" autoComplete="off"
                                 onChange={(e) => this.handleChange("lastName", e)}
                                 value={this.state.lastName}></input>
                             <br />
                             <br />
-                            <input type="text" name="email" placeholder="Email" autoComplete="off"
+                            <input id="expand-input-half" type="text" name="email" placeholder="Email" autoComplete="off"
                                 onChange={(e) => this.handleChange("email", e)}
                                 value={this.state.email}></input>
                             <br />
                             <br />
-                            <input type="number" step="0.01" name="GPA" placeholder="GPA" autoComplete="off" onChange={(e) => this.handleChange("gpa", e)}
+                            <input id="expand-input-half" type="number" step="0.01" name="GPA" placeholder="GPA" autoComplete="off" onChange={(e) => this.handleChange("gpa", e)}
                                 value={this.state.gpa}></input>
                             <br />
                             <br />
-                            <input className="button" type="submit"></input>
+                            <input id="expand-input-half" className="button" type="submit"></input>
                         </fieldset>
                     </form>
                 </div>

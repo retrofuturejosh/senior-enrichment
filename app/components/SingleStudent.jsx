@@ -55,7 +55,7 @@ export default class SingleStudent extends Component {
                     <div id="single-student-header">
                         <h1>{this.state.student.name}</h1>
                     </div>
-                    <button id="delete-student-button" onClick={this.handleDelete}> DELETE STUDENT </button>
+                    <button id="expand-input-half" className="delete-student-button" onClick={this.handleDelete}> DELETE STUDENT </button>
                     <br />
                     <div id="single-student-info">
                         <ul>
@@ -67,7 +67,7 @@ export default class SingleStudent extends Component {
                     <br />
 
                     <div>
-                        <Link to={`/student/edit/${this.state.student.id}`}><button> EDIT STUDENT </button></Link>
+                        <Link to={`/student/edit/${this.state.student.id}`}><button id="expand-input-half"> EDIT STUDENT </button></Link>
                     </div>
                 </div>
             </div>
