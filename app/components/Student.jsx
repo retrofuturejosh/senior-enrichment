@@ -12,6 +12,7 @@ export default class Campus extends Component {
         }
         this.handleDelete = this.handleDelete.bind(this);
         this.fetchStudents = this.fetchStudents.bind(this);
+        this.organizeStudents = this.organizeStudents.bind(this);
     }
 
     componentDidMount () {
@@ -34,12 +35,22 @@ export default class Campus extends Component {
         return axios.get('/api/student')
         .then(res => res.data)
         .then(students => {
+            this.organizeStudents(students);
             this.setState({ students })
             return students;
         })
     }
 
+    organizeStudents (students) {
+        return students.sort((a,b) => {
+            let lastNameA = a.name.split(' ')[1];
+            let lastNameB = b.name.split(' ')[1];
+            return (lastNameA > lastNameB) ? 1 : ((lastNameB > lastNameA) ? -1 : 0);
+        });
+    }
+
     render (props) { 
+
         return (
             <div id="current-component">
                 <div id="add-student-feature">
