@@ -8312,6 +8312,10 @@ tr:hover {
   margin-bottom: 25px;
 }
 
+#dropdown-inside.a {
+  font-size: 100px;
+}
+
 .dropdown:hover .dropdown-content {
   display: block;
   margin-bottom: 25px;

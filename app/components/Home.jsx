@@ -27,11 +27,18 @@ class Home extends Component {
     }
 
     componentDidMount() {
+        this.unsubscribeFromStore = store.subscribe(() => {
+            this.setState(store.getState());
+         });
         const campusesThunk = this.props.fetchCampusesThunk();
         let storePromise = store.dispatch(campusesThunk);
         storePromise.then(()=> {
             this.setState(store.getState())
         })
+    }
+
+    componentWillUnmount() {
+        this.unsubscribeFromStore();
     }
 
     render() {

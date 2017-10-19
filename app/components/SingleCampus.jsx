@@ -62,11 +62,14 @@ export default class SingleCampus extends Component {
     handleSubmit(e) {
         e.preventDefault();
         let campusId = this.state.campus.id;
+        let gpa;
+        if (this.state.gpa === '') gpa = 0.0;
+        else gpa = this.state.gpa;
         let newStudent = {
             name: this.state.firstName + ' ' + this.state.lastName,
             email: this.state.email,
-            gpa: this.state.gpa,
-            campusId: campusId
+            gpa,
+            campusId
         }
         let newStudentPromise = axios.post("/api/student", newStudent)
             .then(student => {

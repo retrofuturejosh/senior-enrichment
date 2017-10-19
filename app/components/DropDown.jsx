@@ -28,9 +28,9 @@ export default class MyDropDown extends Component {
                 </div>
                 <div id="dropdown-inside" className="dropdown-content">
                     <ul>
-                        <li className="drop-list"><Link to="/home">Campuses</Link></li>
-                        <li className="drop-list"><Link to="/student">Students</Link></li>
-                        <li className="drop-list"><Link to="/campus">Add Campus</Link></li>
+                        <li className="drop-list"><Link to="/home"><h5>Campuses</h5></Link></li>
+                        <li className="drop-list"><Link to="/student"><h5>Students</h5></Link></li>
+                        <li className="drop-list"><Link to="/campus"><h5>Add Campus</h5></Link></li>
                     </ul>
                 </div>
             </div>
