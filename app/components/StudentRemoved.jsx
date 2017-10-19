@@ -7,7 +7,7 @@ const StudentRemoved = (props) => {
     <div id="current-component">
       <div id="component-removed">
         <h1>
-         REMOVED {props.match.params.name}
+          REMOVED {props.match.params.name}
         </h1>
       </div>
     </div>

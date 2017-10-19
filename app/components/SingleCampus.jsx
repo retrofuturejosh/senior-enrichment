@@ -24,18 +24,18 @@ export default class SingleCampus extends Component {
         this.organizeStudents = this.organizeStudents.bind(this);
     }
 
-    fetchStudents (campusId) {
+    fetchStudents(campusId) {
         axios.get(`/api/student/campus/${campusId}`)
-        .then(res => res.data)
-        .then(students => {
-            students = this.organizeStudents(students);
-            this.setState({ students })
-        })
-        .catch(error => console.log('BUMMER ', error));
+            .then(res => res.data)
+            .then(students => {
+                students = this.organizeStudents(students);
+                this.setState({ students })
+            })
+            .catch(error => console.log('BUMMER ', error));
     }
 
-    organizeStudents (students) {
-        return students.sort((a,b) => {
+    organizeStudents(students) {
+        return students.sort((a, b) => {
             let lastNameA = a.name.split(' ')[1];
             let lastNameB = b.name.split(' ')[1];
             return (lastNameA > lastNameB) ? 1 : ((lastNameB > lastNameA) ? -1 : 0);
@@ -45,20 +45,20 @@ export default class SingleCampus extends Component {
     componentDidMount() {
         let campusId = this.props.match.params.id;
         axios.get(`/api/campus/${campusId}`)
-        .then(res => res.data)
-        .then(campus => {
-            this.setState({ campus })
-        })
-        .then(() => {
-            this.fetchStudents(campusId);
-        })
-        .catch(error => {
-            console.log('Oops! Someone goofed!')
-        })
+            .then(res => res.data)
+            .then(campus => {
+                this.setState({ campus })
+            })
+            .then(() => {
+                this.fetchStudents(campusId);
+            })
+            .catch(error => {
+                console.log('Oops! Someone goofed!')
+            })
 
     }
 
-    handleSubmit (e) {
+    handleSubmit(e) {
         e.preventDefault();
         let campusId = this.state.campus.id;
         let newStudent = {
@@ -68,13 +68,13 @@ export default class SingleCampus extends Component {
             campusId: campusId
         }
         let newStudentPromise = axios.post("/api/student", newStudent)
-        .then(student => {
-            console.log('posted! ', student.data);
-        })
-        .then(() => {
-            this.fetchStudents(campusId);
-        })
-        .catch(error => console.log(error))
+            .then(student => {
+                console.log('posted! ', student.data);
+            })
+            .then(() => {
+                this.fetchStudents(campusId);
+            })
+            .catch(error => console.log(error))
         let clearStudent = {
             firstName: '',
             lastName: '',
@@ -85,43 +85,43 @@ export default class SingleCampus extends Component {
         this.setState(clearStudent);
     }
 
-    handleChange (category, e) {
+    handleChange(category, e) {
         this.setState({
             [category]: e.target.value
         })
     }
-        
-    removeFromCampus (e){
+
+    removeFromCampus(e) {
         let studentId = e.target.value;
-        let studentEdit = {campusId: null}
+        let studentEdit = { campusId: null }
         axios.put(`/api/student/${e.target.value}`, studentEdit)
-        .then(student => {
-            console.log('success ', student)
-            this.fetchStudents(this.state.campus.id);
-        })
+            .then(student => {
+                console.log('success ', student)
+                this.fetchStudents(this.state.campus.id);
+            })
     }
 
-    handleDelete (e) {
+    handleDelete(e) {
         e.preventDefault();
         let campusId = this.state.campus.id;
         savedCampusName = this.state.campus.name;
         axios.delete(`/api/campus/${campusId}`)
-        .then(success =>{
-            console.log('success ', success)
-            this.setState({redirect: true})
-        })
+            .then(success => {
+                console.log('success ', success)
+                this.setState({ redirect: true })
+            })
     }
-    
+
 
     render(props) {
-        if(this.state.redirect){
-            return <Redirect to={`/campusremoved/${savedCampusName}`}/>;
-        } 
+        if (this.state.redirect) {
+            return <Redirect to={`/campusremoved/${savedCampusName}`} />;
+        }
 
-        if(this.state.campus.id === undefined){
+        if (this.state.campus.id === undefined) {
             return <h1>No Campus Found</h1>
         }
-        
+
         return (
             <div id="current-component">
                 <div id="singlecampus-top">
@@ -133,71 +133,72 @@ export default class SingleCampus extends Component {
 
                 <div id="singlecampus-body">
                     <img id="campus-image" src={this.state.campus.image} />
-                        <div id="student-list">
-                            <div id="campus-student-list">
+                    <div id="student-list">
+                        <div id="campus-student-list">
 
 
-                {
-                    (this.state.students.length) ? (
-                        <div>
-                        <div id="student-list-header">
-                            <h3>Enrolled Students</h3>
-                        </div>
-                            <table id="single-campus-student-list"> 
-                                {
-                                this.state.students.map((student, idx) => {
-                                    return (
-                                        <tr>
-                                            <td className="student-list-td" key={student.id}>
-                                                <Link to={`/student/${student.id}`} key={student.id}>
-                                                    {student.name}
-                                                </Link> 
-                                            </td>
-                                            <td>
-                                                <button id="student-list-button" onClick={this.removeFromCampus} value={student.id} key={student.id + 'a'}>
-                                                Remove from Campus
+                            {
+                                (this.state.students.length) ? (
+                                    <div>
+                                        <div id="student-list-header">
+                                            <h3>Enrolled Students</h3>
+                                        </div>
+                                        <table id="single-campus-student-list">
+                                            {
+                                                this.state.students.map((student, idx) => {
+                                                    return (
+                                                        <tr>
+                                                            <td className="student-list-td" key={student.id}>
+                                                                <Link to={`/student/${student.id}`} key={student.id}>
+                                                                    {student.name}
+                                                                </Link>
+                                                            </td>
+                                                            <td>
+                                                                <button id="student-list-button" onClick={this.removeFromCampus} value={student.id} key={student.id + 'a'}>
+                                                                    Remove from Campus
                                                 </button>
-                                                
-                                            </td>
-                                        </tr>
-                                    )})
-                                }
-                            </table>
-                        </div>
-                    ) : (
-                        <h4>No Students Enrolled</h4>
-                    )
-                }
 
-                            </div>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+                                        </table>
+                                    </div>
+                                ) : (
+                                        <h4>No Students Enrolled</h4>
+                                    )
+                            }
+
                         </div>
+                    </div>
 
                 </div>
 
 
-                <br/>
+                <br />
 
                 <div id="campus-add-student">
                     <h3>Add Student</h3>
                     <form onSubmit={this.handleSubmit}>
                         <fieldset>
                             <input type="text" name="firstName" placeholder="First Name" autoComplete="off"
-                            onChange={(e) => this.handleChange("firstName", e)}
-                            value={this.state.firstName}></input>
+                                onChange={(e) => this.handleChange("firstName", e)}
+                                value={this.state.firstName}></input>
                             <br />
                             <br />
                             <input type="text" name="lastName" placeholder="Last Name" autoComplete="off"
-                            onChange={(e) => this.handleChange("lastName", e)}
-                            value={this.state.lastName}></input>
+                                onChange={(e) => this.handleChange("lastName", e)}
+                                value={this.state.lastName}></input>
                             <br />
                             <br />
-                            <input type="text" name="email" placeholder="Email"autoComplete="off"
-                            onChange={(e) => this.handleChange("email", e)}
-                            value={this.state.email}></input>
+                            <input type="text" name="email" placeholder="Email" autoComplete="off"
+                                onChange={(e) => this.handleChange("email", e)}
+                                value={this.state.email}></input>
                             <br />
                             <br />
                             <input type="number" step="0.01" name="GPA" placeholder="GPA" autoComplete="off" onChange={(e) => this.handleChange("gpa", e)}
-                            value={this.state.gpa}></input>
+                                value={this.state.gpa}></input>
                             <br />
                             <br />
                             <input className="button" type="submit"></input>
@@ -205,6 +206,6 @@ export default class SingleCampus extends Component {
                     </form>
                 </div>
             </div>
-            )
+        )
     }
 }

@@ -16,62 +16,62 @@ export default class EditCampus extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount () {
+    componentDidMount() {
         let campusId = this.props.match.params.id;
         axios.get(`/api/campus/${campusId}`)
-        .then(res => res.data)
-        .then(campus => {
-            this.setState({
-                campus,
-                campusNameEntry: campus.name,
-                campusImg: campus.image
+            .then(res => res.data)
+            .then(campus => {
+                this.setState({
+                    campus,
+                    campusNameEntry: campus.name,
+                    campusImg: campus.image
+                })
             })
-        })
     }
 
-    handleChange (category, e) {
+    handleChange(category, e) {
         this.setState({
             [category]: e.target.value
         })
     }
 
-    handleSubmit (e) {
+    handleSubmit(e) {
         e.preventDefault();
         let campusName = this.state.campusNameEntry;
         let campusImg = this.state.campusImg;
         let editCampus = { name: campusName, image: campusImg }
         axios.put(`/api/campus/${this.state.campus.id}`, editCampus)
-        .then(campus => {
-            console.log('updated! ', campus.data);
-            this.setState({redirect: true})
-        })
-        .catch(error => console.log(error))
+            .then(campus => {
+                console.log('updated! ', campus.data);
+                this.setState({ redirect: true })
+            })
+            .catch(error => console.log(error))
     }
-    
 
-    render () {
-        if (this.state.redirect){
+
+    render() {
+        if (this.state.redirect) {
             return <Redirect to={`/campus/${this.state.campus.id}`} />
         }
         return (
             <div id="current-component">
                 <div id="campus-editor">
-                <h2><Link to={`/campus/${this.state.campus.id}`}>{this.state.campus.name}</Link></h2>
-                <form onSubmit={this.handleSubmit}>
-                    <fieldset>
-                        <h4>Campus Name</h4>
-                        <input style={{"width": "40%"}} type="text" name="campusName" value={this.state.campusNameEntry} autoComplete="off" onChange={(e) => this.handleChange("campusNameEntry", e)} value={this.state.campusNameEntry}></input>
-                        <br />
-                        <br />
-                        <h4>Campus Image Link</h4>
-                        <input style={{"width": "40%"}} type="text" name="campusImg" value={this.state.campusImg} autoComplete="off" onChange={(e) => this.handleChange("campusImg", e)} value={this.state.campusImg}></input>
-                        <br />
-                        <br />
-                        <input type="submit" value="Submit Edit"></input>
-                    </fieldset>
-                </form>
+                    <h2><Link to={`/campus/${this.state.campus.id}`}>{this.state.campus.name}</Link></h2>
+                    <form onSubmit={this.handleSubmit}>
+                        <fieldset>
+                            <h4>Campus Name</h4>
+                            <input style={{ "width": "40%" }} type="text" name="campusName" value={this.state.campusNameEntry} autoComplete="off" onChange={(e) => this.handleChange("campusNameEntry", e)} value={this.state.campusNameEntry}></input>
+                            <br />
+                            <br />
+                            <h4>Campus Image Link</h4>
+                            <input style={{ "width": "40%" }} type="text" name="campusImg" value={this.state.campusImg} autoComplete="off" onChange={(e) => this.handleChange("campusImg", e)} value={this.state.campusImg}></input>
+                            <br />
+                            <br />
+                            <input type="submit" value="Submit Edit"></input>
+                        </fieldset>
+                    </form>
                 </div>
-             </div>
+            </div>
         )
     }
 

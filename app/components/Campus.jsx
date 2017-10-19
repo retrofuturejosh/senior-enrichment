@@ -4,7 +4,7 @@ import { Link, browserHistory } from 'react-router-dom';
 import { Redirect } from 'react-router'
 
 export default class Campus extends Component {
-    constructor (props) {
+    constructor(props) {
         super(props)
         this.state = {
             campusNameEntry: '',
@@ -17,66 +17,66 @@ export default class Campus extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    componentDidMount () {
+    componentDidMount() {
         axios.get('/api/campus')
-        .then(res => res.data)
-        .then(campuses => {
-            this.setState({ campuses })
-        })
+            .then(res => res.data)
+            .then(campuses => {
+                this.setState({ campuses })
+            })
     }
 
-    handleSubmit (e) {
+    handleSubmit(e) {
         e.preventDefault();
         let campusName = this.state.campusNameEntry;
         let campusImg = this.state.campusImg;
         axios.post("/api/campus", { name: campusName, image: campusImg })
-        .then(campus => {
-            console.log('posted! ', campus.data.id);
-            this.setState({campusId: campus.data.id, redirect: true});
-        })
+            .then(campus => {
+                console.log('posted! ', campus.data.id);
+                this.setState({ campusId: campus.data.id, redirect: true });
+            })
     }
 
-    handleChange (category, e) {
+    handleChange(category, e) {
         this.setState({
             [category]: e.target.value
         })
     }
-      
 
-    render (props) { 
-        if (this.state.redirect){
-            return <Redirect to={`/campus/${this.state.campusId}`}/>;
+
+    render(props) {
+        if (this.state.redirect) {
+            return <Redirect to={`/campus/${this.state.campusId}`} />;
         } else return (
             <div id="current-component">
                 <div id="add-campus">
 
-                <div id="add-campus-form">
-                    <h2>Add Campus</h2>
-                    <form onSubmit={this.handleSubmit}>
-                        <fieldset>
-                            <input type="text" name="campusName" placeholder="Campus Name" autoComplete="off" onChange={(e) => this.handleChange("campusNameEntry", e)} value={this.state.campusNameEntry}></input>
-                            <br />
-                            <br/>
-                            <input type="text" name="campusImg" placeholder="Campus Image Link" autoComplete="off" onChange={(e) => this.handleChange("campusImg", e)} value={this.state.campusImg}></input>
-                            <br />
-                            <br />
-                            <input type="submit"></input>
-                        </fieldset>
-                    </form>
-                </div>
+                    <div id="add-campus-form">
+                        <h2>Add Campus</h2>
+                        <form onSubmit={this.handleSubmit}>
+                            <fieldset>
+                                <input type="text" name="campusName" placeholder="Campus Name" autoComplete="off" onChange={(e) => this.handleChange("campusNameEntry", e)} value={this.state.campusNameEntry}></input>
+                                <br />
+                                <br />
+                                <input type="text" name="campusImg" placeholder="Campus Image Link" autoComplete="off" onChange={(e) => this.handleChange("campusImg", e)} value={this.state.campusImg}></input>
+                                <br />
+                                <br />
+                                <input type="submit"></input>
+                            </fieldset>
+                        </form>
+                    </div>
 
-                <div id="add-campus-list">
-                    <h4 id="add-campus-list-header">Campuses</h4>
-                    <ul>
-                        {
-                            this.state.campuses.map(campus => {
-                                return (
-                                    <li key={campus.id} ><Link to={`/campus/${campus.id}`}>{ campus.name }</Link></li>
-                                )
-                            }
-                        )}
-                    </ul>
-                </div>
+                    <div id="add-campus-list">
+                        <h4 id="add-campus-list-header">Campuses</h4>
+                        <ul>
+                            {
+                                this.state.campuses.map(campus => {
+                                    return (
+                                        <li key={campus.id} ><Link to={`/campus/${campus.id}`}>{campus.name}</Link></li>
+                                    )
+                                }
+                                )}
+                        </ul>
+                    </div>
 
                 </div>
             </div>

@@ -23,32 +23,33 @@ export default class EditStudent extends Component {
     componentDidMount() {
         let studentId = this.props.match.params.id;
         axios.get(`/api/student/${studentId}`)
-        .then(res => res.data)
-        .then(student => {
-            let firstLast = student.name.split(' ');
-            this.setState({ student,
-                firstName: firstLast[0],
-                lastName: firstLast[1],
-                email: student.email,
-                gpa: student.gpa,
-                campusId: student.campusId
+            .then(res => res.data)
+            .then(student => {
+                let firstLast = student.name.split(' ');
+                this.setState({
+                    student,
+                    firstName: firstLast[0],
+                    lastName: firstLast[1],
+                    email: student.email,
+                    gpa: student.gpa,
+                    campusId: student.campusId
+                })
             })
-        })
-        .catch(error => console.log('BUMMER ', error));
+            .catch(error => console.log('BUMMER ', error));
         axios.get('/api/campus')
-        .then(res => res.data)
-        .then(campuses => {
-            this.setState({campuses})
-        })
+            .then(res => res.data)
+            .then(campuses => {
+                this.setState({ campuses })
+            })
     }
 
-    handleChange (category, e) {
+    handleChange(category, e) {
         this.setState({
             [category]: e.target.value
         })
     }
 
-    handleSubmit (e) {
+    handleSubmit(e) {
         e.preventDefault();
         let campusId = this.state.student.campusId;
         let editStudent = {
@@ -59,16 +60,16 @@ export default class EditStudent extends Component {
         }
 
         axios.put(`/api/student/${this.state.student.id}`, editStudent)
-        .then(student => {
-            console.log('updated! ', student.data);
-            this.setState({redirect: true})
-        })
-        .catch(error => console.log(error))
+            .then(student => {
+                console.log('updated! ', student.data);
+                this.setState({ redirect: true })
+            })
+            .catch(error => console.log(error))
     }
 
-    render (props) {
-        if(this.state.redirect){
-            return <Redirect to={`/student/${this.state.student.id}`}/>
+    render(props) {
+        if (this.state.redirect) {
+            return <Redirect to={`/student/${this.state.student.id}`} />
         }
         return (
             <div id="current-component">
@@ -81,39 +82,39 @@ export default class EditStudent extends Component {
                             <fieldset>
                                 First Name
                                 <br />
-                                    <input type="text" name="firstName" placeholder="First Name" autoComplete="off"
+                                <input type="text" name="firstName" placeholder="First Name" autoComplete="off"
                                     onChange={(e) => this.handleChange("firstName", e)}
                                     value={this.state.firstName}></input>
                                 <br />
                                 Last Name
                                 <br />
-                                    <input type="text" name="lastName" placeholder="Last Name" autoComplete="off"
+                                <input type="text" name="lastName" placeholder="Last Name" autoComplete="off"
                                     onChange={(e) => this.handleChange("lastName", e)}
                                     value={this.state.lastName}></input>
                                 <br />
                                 Email
                                 <br />
-                                    <input type="text" name="email" placeholder="Email"autoComplete="off"
+                                <input type="text" name="email" placeholder="Email" autoComplete="off"
                                     onChange={(e) => this.handleChange("email", e)}
                                     value={this.state.email}></input>
                                 <br />
                                 GPA
                                 <br />
-                                    <input type="number" step="0.01" name="GPA" placeholder="GPA" autoComplete="off" onChange={(e) => this.handleChange("gpa", e)}
+                                <input type="number" step="0.01" name="GPA" placeholder="GPA" autoComplete="off" onChange={(e) => this.handleChange("gpa", e)}
                                     value={this.state.gpa}></input>
                                 <br />
                                 Select Campus
                                 <br />
-                                    <select name="campus" onChange={(e) => this.handleChange("campusId", e)}>
+                                <select name="campus" onChange={(e) => this.handleChange("campusId", e)}>
                                     <option value="" disabled selected>Select Campus</option>
                                     {
                                         this.state.campuses.map(campus => {
-                                            if (campus.id === this.state.student.campusId){
+                                            if (campus.id === this.state.student.campusId) {
                                                 return <option selected value={campus.id} key={campus.id}>{campus.name}</option>
                                             } else return <option value={campus.id} key={campus.id}>{campus.name}</option>
                                         })
                                     }
-                                    </select>
+                                </select>
                                 <br />
                                 <br />
                                 <input className="button" value="Submit Edit" type="submit"></input>

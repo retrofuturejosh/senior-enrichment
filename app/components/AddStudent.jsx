@@ -20,21 +20,21 @@ export default class AddStudent extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    componentDidMount () {
+    componentDidMount() {
         axios.get('/api/campus')
-        .then(res => res.data)
-        .then(campuses => {
-            this.setState({campuses})
-        })
+            .then(res => res.data)
+            .then(campuses => {
+                this.setState({ campuses })
+            })
     }
-    
-    handleChange (category, e) {
+
+    handleChange(category, e) {
         this.setState({
             [category]: e.target.value
         })
     }
 
-    handleSubmit (e) {
+    handleSubmit(e) {
         e.preventDefault();
         let fetchStudents = this.props.fetchStudents;
         let fetchPromise
@@ -52,15 +52,15 @@ export default class AddStudent extends Component {
             redirect: false
         }
         axios.post("/api/student", newStudent)
-        .then(student => {
-            console.log('posted! ', student.data);
-            return fetchStudents();
-        })
-        .then(() => {
-            this.setState(clearStudent)
-        })
-        .catch(error => console.log(error))
-    }  
+            .then(student => {
+                console.log('posted! ', student.data);
+                return fetchStudents();
+            })
+            .then(() => {
+                this.setState(clearStudent)
+            })
+            .catch(error => console.log(error))
+    }
 
     render(props) {
         return (
@@ -69,31 +69,31 @@ export default class AddStudent extends Component {
                 <form onSubmit={this.handleSubmit}>
                     <fieldset>
                         <input id="expand-input" type="text" name="firstName" placeholder="First Name" autoComplete="off"
-                        onChange={(e) => this.handleChange("firstName", e)}
-                        value={this.state.firstName}></input>
+                            onChange={(e) => this.handleChange("firstName", e)}
+                            value={this.state.firstName}></input>
                         <br />
                         <br />
                         <input id="expand-input" type="text" name="lastName" placeholder="Last Name" autoComplete="off"
-                        onChange={(e) => this.handleChange("lastName", e)}
-                        value={this.state.lastName}></input>
+                            onChange={(e) => this.handleChange("lastName", e)}
+                            value={this.state.lastName}></input>
                         <br />
                         <br />
-                        <input id="expand-input" type="text" name="email" placeholder="Email"autoComplete="off"
-                        onChange={(e) => this.handleChange("email", e)}
-                        value={this.state.email}></input>
+                        <input id="expand-input" type="text" name="email" placeholder="Email" autoComplete="off"
+                            onChange={(e) => this.handleChange("email", e)}
+                            value={this.state.email}></input>
                         <br />
                         <br />
                         <input id="expand-input" type="number" step="0.01" name="GPA" placeholder="GPA" autoComplete="off" onChange={(e) => this.handleChange("gpa", e)}
-                        value={this.state.gpa}></input>
+                            value={this.state.gpa}></input>
                         <br />
                         <br />
                         <select name="campus" onChange={(e) => this.handleChange("campusId", e)}>
-                        <option value="" disabled selected>Select Campus</option>
-                        {
-                            this.state.campuses.map(campus => {
-                                return <option value={campus.id} key={campus.id}>{campus.name}</option>
-                            })
-                        }
+                            <option value="" disabled selected>Select Campus</option>
+                            {
+                                this.state.campuses.map(campus => {
+                                    return <option value={campus.id} key={campus.id}>{campus.name}</option>
+                                })
+                            }
                         </select>
                         <br />
                         <br />
@@ -106,6 +106,6 @@ export default class AddStudent extends Component {
         )
     }
 
-    
+
 }
 

@@ -19,36 +19,36 @@ export default class SingleStudent extends Component {
     componentDidMount() {
         let studentId = this.props.match.params.id;
         let studentPromise = axios.get(`/api/student/${studentId}`)
-        .then(res => res.data)
-        .then(student => {
-            this.setState({ student, campus: student.campus })
-            savedName = student.name;
-        })
-        .catch(error => console.log('BUMMER ', error));
+            .then(res => res.data)
+            .then(student => {
+                this.setState({ student, campus: student.campus })
+                savedName = student.name;
+            })
+            .catch(error => console.log('BUMMER ', error));
 
     }
 
-    handleDelete (e) {
+    handleDelete(e) {
         e.preventDefault();
         let studentId = this.state.student.id;
         let savedId = this.state.campus.id
         axios.delete(`/api/student/${studentId}`)
-        .then(student => {
-            this.setState({redirect: true})
-        })
+            .then(student => {
+                this.setState({ redirect: true })
+            })
     }
 
     render(props) {
 
-        if(this.state.redirect) {
-            if (savedName === null){
-                return <Redirect to={`/`}/>;
-            } else return <Redirect to={`/studentremoved/${savedName}`}/>;
-        } 
-        if(!this.state.student.id){
+        if (this.state.redirect) {
+            if (savedName === null) {
+                return <Redirect to={`/`} />;
+            } else return <Redirect to={`/studentremoved/${savedName}`} />;
+        }
+        if (!this.state.student.id) {
             return <div> <h1>NO STUDENT FOUND</h1></div>
         }
-        
+
         return (
             <div id="current-component">
                 <div id="single-student">
@@ -57,17 +57,17 @@ export default class SingleStudent extends Component {
                     </div>
                     <button id="delete-student-button" onClick={this.handleDelete}> DELETE STUDENT </button>
                     <br />
-                        <div id="single-student-info">
-                            <ul>
-                                <li>Campus: <Link to={`/campus/${this.state.campus.id}`}>{this.state.campus.name} </Link></li>
-                                <li>Email: <a href={`mailto:${this.state.student.email}`}> {this.state.student.email} </a></li>
-                                <li>GPA: {this.state.student.gpa} </li>
-                            </ul>
-                        </div>
-                <br />
-                
+                    <div id="single-student-info">
+                        <ul>
+                            <li>Campus: <Link to={`/campus/${this.state.campus.id}`}>{this.state.campus.name} </Link></li>
+                            <li>Email: <a href={`mailto:${this.state.student.email}`}> {this.state.student.email} </a></li>
+                            <li>GPA: {this.state.student.gpa} </li>
+                        </ul>
+                    </div>
+                    <br />
+
                     <div>
-                        <Link to={`/student/edit/${this.state.student.id}`}><button> EDIT STUDENT </button></Link> 
+                        <Link to={`/student/edit/${this.state.student.id}`}><button> EDIT STUDENT </button></Link>
                     </div>
                 </div>
             </div>
