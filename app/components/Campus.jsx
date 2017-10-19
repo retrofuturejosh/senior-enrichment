@@ -47,21 +47,26 @@ export default class Campus extends Component {
         if (this.state.redirect){
             return <Redirect to={`/campus/${this.state.campusId}`}/>;
         } else return (
-            <div>
-                <div>
+            <div id="current-component">
+                <div id="add-campus">
+
+                <div id="add-campus-form">
                     <h2>Add Campus</h2>
                     <form onSubmit={this.handleSubmit}>
                         <fieldset>
                             <input type="text" name="campusName" placeholder="Campus Name" autoComplete="off" onChange={(e) => this.handleChange("campusNameEntry", e)} value={this.state.campusNameEntry}></input>
                             <br />
+                            <br/>
                             <input type="text" name="campusImg" placeholder="Campus Image Link" autoComplete="off" onChange={(e) => this.handleChange("campusImg", e)} value={this.state.campusImg}></input>
+                            <br />
                             <br />
                             <input type="submit"></input>
                         </fieldset>
                     </form>
                 </div>
-                <div>
-                    <h1>Campuses</h1>
+
+                <div id="add-campus-list">
+                    <h4 id="add-campus-list-header">Campuses</h4>
                     <ul>
                         {
                             this.state.campuses.map(campus => {
@@ -71,6 +76,8 @@ export default class Campus extends Component {
                             }
                         )}
                     </ul>
+                </div>
+
                 </div>
             </div>
         )

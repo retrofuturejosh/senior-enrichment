@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, browserHistory } from 'react-router-dom';
 import { Redirect } from 'react-router'
 
 let savedName = null;
@@ -44,23 +44,31 @@ export default class SingleStudent extends Component {
             if (savedName === null){
                 return <Redirect to={`/`}/>;
             } else return <Redirect to={`/studentremoved/${savedName}`}/>;
-        } else return (
-            <div>
-                <h1>{this.state.student.name}</h1>
-                <div>
-                    <ul>
-                        <li>Campus: <Link to={`/campus/${this.state.campus.id}`}>{this.state.campus.name} </Link></li>
-                        <li>Email: {this.state.student.email}</li>
-                        <li>GPA: {this.state.student.gpa} </li>
-                    </ul>
-                </div>
-                <div>
-                    <Link to={`/student/edit/${this.state.student.id}`}><button> EDIT STUDENT </button></Link> 
-                </div>
+        } 
+        if(!this.state.student.id){
+            return <div> <h1>NO STUDENT FOUND</h1></div>
+        }
+        
+        return (
+            <div id="current-component">
+                <div id="single-student">
+                    <div id="single-student-header">
+                        <h1>{this.state.student.name}</h1>
+                    </div>
+                    <button id="delete-student-button" onClick={this.handleDelete}> DELETE STUDENT </button>
+                    <br />
+                        <div id="single-student-info">
+                            <ul>
+                                <li>Campus: <Link to={`/campus/${this.state.campus.id}`}>{this.state.campus.name} </Link></li>
+                                <li>Email: <a href={`mailto:${this.state.student.email}`}> {this.state.student.email} </a></li>
+                                <li>GPA: {this.state.student.gpa} </li>
+                            </ul>
+                        </div>
                 <br />
-                <br />
-                <div>
-                    <button onClick={this.handleDelete}> DELETE STUDENT </button>
+                
+                    <div>
+                        <Link to={`/student/edit/${this.state.student.id}`}><button> EDIT STUDENT </button></Link> 
+                    </div>
                 </div>
             </div>
         )

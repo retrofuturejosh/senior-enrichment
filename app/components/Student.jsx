@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import { Link } from 'react-router-dom';
+import { Link, browserHistory } from 'react-router-dom';
 import AddStudent from './AddStudent'
+import StudentTable from './StudentTable'
 
 export default class Campus extends Component {
     constructor (props) {
@@ -14,14 +15,9 @@ export default class Campus extends Component {
     }
 
     componentDidMount () {
-        this.fetchStudents();
-    }
-    
-    fetchStudents () {
-        axios.get('/api/student')
-        .then(res => res.data)
-        .then(students => {
-            this.setState({ students })
+        let fetchPromise = this.fetchStudents();
+        fetchPromise.then(students => {
+            this.setState({students})
         })
     }
 
@@ -33,42 +29,63 @@ export default class Campus extends Component {
             this.fetchStudents();
         })
     }
+    
+    fetchStudents () {
+        return axios.get('/api/student')
+        .then(res => res.data)
+        .then(students => {
+            this.setState({ students })
+            return students;
+        })
+    }
 
     render (props) { 
         return (
-            <div>
-                <h1>Students</h1>
+            <div id="current-component">
+                <div id="add-student-feature">
+                    <div id="add-student-field">
+                        <AddStudent fetchStudents={this.fetchStudents}/>
+                    </div>
                 <br />
-                <table style={{width: "65%"}}>
-                    <tr>
-                        <th>Student</th>
-                        <th>Campus</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                    {
-                        this.state.students.map(student => {
-                            if (student.campus) {
-                                return (
-                                    <tr key={student.id}>
-                                    <td key={student.id} ><Link to={`/student/${student.id}`}>{ student.name }</Link></td>
-                                    <td><Link to={`/campus/${student.campusId}`}>{student.campus.name} </Link></td>
-                                    <td><Link to={`/student/edit/${student.id}`}><button> EDIT STUDENT </button></Link></td>
-                                    <td><button value={student.id} onClick={this.handleDelete}> DELETE STUDENT </button></td>
-                                    </tr>
-                            )} else {
-                                return (
-                                    <tr key={student.id}>
-                                    <td key={student.id} ><Link to={`/student/${student.id}`}>{ student.name }</Link></td>
-                                    <td>No Campus Assigned</td>
-                                    <td><Link to={`/student/edit/${student.id}`}><button> EDIT STUDENT </button></Link></td>
-                                    <td><button value={student.id} onClick={this.handleDelete}> DELETE STUDENT </button></td>
-                                    </tr>
+
+                    <div id="student-table">
+                    <div>
+                        <h1>Students</h1>
+                    </div>
+                        <table style={{width: "95%"}}>
+                            <tr>
+                                <th>Student</th>
+                                <th>Campus</th>
+                                <th>Email</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                            {
+                                this.state.students.map(student => {
+                                    if (student.campus) {
+                                        return (
+                                            <tr key={student.id}>
+                                            <td key={student.id} ><Link to={`/student/${student.id}`}>{ student.name }</Link></td>
+                                            <td><Link to={`/campus/${student.campusId}`}>{student.campus.name} </Link></td>
+                                            <td><a href={`mailto:${student.email}`}>{student.email}</a></td>
+                                            <td><Link to={`/student/edit/${student.id}`}><button> EDIT STUDENT </button></Link></td>
+                                            <td><button id="delete-student-button" value={student.id} onClick={this.handleDelete}> DELETE STUDENT </button></td>
+                                            </tr>
+                                    )} else {
+                                        return (
+                                            <tr key={student.id}>
+                                            <td key={student.id} ><Link to={`/student/${student.id}`}>{ student.name }</Link></td>
+                                            <td>No Campus Assigned</td>
+                                            <td><a href={`mailto:${student.email}`}>{student.email}</a></td>
+                                            <td><Link to={`/student/edit/${student.id}`}><button> EDIT STUDENT </button></Link></td>
+                                            <td><button id="delete-student-button" value={student.id} onClick={this.handleDelete}> DELETE STUDENT </button></td>
+                                            </tr>
+                                    )}
+                                }
                             )}
-                        }
-                    )}
-                </table>
-                <AddStudent fetchStudents={this.fetchStudents}/>
+                        </table>
+                    </div>
+                </div>
             </div>
         )
     }

@@ -10,24 +10,27 @@ import CampusRemoved from './CampusRemoved';
 import Navbar from './navbar';
 import EditStudent from './EditStudent';
 import StudentRemoved from './StudentRemoved';
-import EditCampus from './EditCampus'
+import EditCampus from './EditCampus';
+import { Link, browserHistory } from 'react-router-dom';
 
 const Root = (props) => {
     
     return (
-            <div>
+            <div id="whole-page">
                 <Navbar />
                 <Switch>
+                <div id="mainapp">
                     <Route path="/home" component={Home}/>
-                    <Route exact path="/campus" component={Campus}/>
-                    <Route path="/student/edit/:id" component={EditStudent}/>
-                    <Route path="/campus/edit/:id" component={EditCampus}/>
-                    <Route path="/student/:id" component={SingleStudent}/>
-                    <Route path="/campus/:id" component={SingleCampus} />
-                    <Route path="/student/" component={Student}/>
+                    <Route exact path="/student/edit/:id" component={EditStudent}/>
+                    <Route exact path="/campus/edit/:id" component={EditCampus}/>
+                    <Route exact path="/student/:id" component={SingleStudent}/>
+                    <Route exact path="/campus/:id" component={SingleCampus} />
                     <Route path="/campusremoved/:name" component={CampusRemoved} />
                     <Route path="/studentremoved/:name" component={StudentRemoved} />
+                    <Route exact path="/campus" component={Campus}/>
+                    <Route exact path="/student/" component={Student}/>
                     <Route exact path="/" component={Home}/>
+                </div>
                 </Switch>
             </div>
     )

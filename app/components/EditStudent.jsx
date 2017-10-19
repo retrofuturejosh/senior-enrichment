@@ -71,60 +71,57 @@ export default class EditStudent extends Component {
             return <Redirect to={`/student/${this.state.student.id}`}/>
         }
         return (
-            <div>
-            <div>
-                <h2>EDIT {this.state.student.name}</h2>
-            </div>
-            <div>
-            <form onSubmit={this.handleSubmit}>
-                <fieldset>
-                    First Name
-                    <br />
-                    <input type="text" name="firstName" placeholder="First Name" autoComplete="off"
-                    onChange={(e) => this.handleChange("firstName", e)}
-                    value={this.state.firstName}></input>
-                    <br />
-                    Last Name
-                    <br />
-                    <input type="text" name="lastName" placeholder="Last Name" autoComplete="off"
-                    onChange={(e) => this.handleChange("lastName", e)}
-                    value={this.state.lastName}></input>
-                    <br />
-                    Email
-                    <br />
-                    <input type="text" name="email" placeholder="Email"autoComplete="off"
-                    onChange={(e) => this.handleChange("email", e)}
-                    value={this.state.email}></input>
-                    <br />
-                    GPA
-                    <br />
-                    <input type="number" step="0.01" name="GPA" placeholder="GPA" autoComplete="off" onChange={(e) => this.handleChange("gpa", e)}
-                    value={this.state.gpa}></input>
-                    <br />
-                    Select Campus
-                    <br />
-                    <select name="campus" onChange={(e) => this.handleChange("campusId", e)}>
-                    <option value="" disabled selected>Select Campus</option>
-                        {
-                            this.state.campuses.map(campus => {
-                                if (campus.id === this.state.student.campusId){
-                                    return <option selected value={campus.id} key={campus.id}>{campus.name}</option>
-                                } else return <option value={campus.id} key={campus.id}>{campus.name}</option>
-                            })
-                        }
-                    </select>
-                    <input type="submit"></input>
-                </fieldset>
-            </form>
-            </div>
+            <div id="current-component">
+                <div id="edit-student">
+                    <div>
+                        <h2><Link to={`/student/${this.state.student.id}`}> {this.state.student.name} </Link> </h2>
+                    </div>
+                    <div>
+                        <form onSubmit={this.handleSubmit}>
+                            <fieldset>
+                                First Name
+                                <br />
+                                    <input type="text" name="firstName" placeholder="First Name" autoComplete="off"
+                                    onChange={(e) => this.handleChange("firstName", e)}
+                                    value={this.state.firstName}></input>
+                                <br />
+                                Last Name
+                                <br />
+                                    <input type="text" name="lastName" placeholder="Last Name" autoComplete="off"
+                                    onChange={(e) => this.handleChange("lastName", e)}
+                                    value={this.state.lastName}></input>
+                                <br />
+                                Email
+                                <br />
+                                    <input type="text" name="email" placeholder="Email"autoComplete="off"
+                                    onChange={(e) => this.handleChange("email", e)}
+                                    value={this.state.email}></input>
+                                <br />
+                                GPA
+                                <br />
+                                    <input type="number" step="0.01" name="GPA" placeholder="GPA" autoComplete="off" onChange={(e) => this.handleChange("gpa", e)}
+                                    value={this.state.gpa}></input>
+                                <br />
+                                Select Campus
+                                <br />
+                                    <select name="campus" onChange={(e) => this.handleChange("campusId", e)}>
+                                    <option value="" disabled selected>Select Campus</option>
+                                    {
+                                        this.state.campuses.map(campus => {
+                                            if (campus.id === this.state.student.campusId){
+                                                return <option selected value={campus.id} key={campus.id}>{campus.name}</option>
+                                            } else return <option value={campus.id} key={campus.id}>{campus.name}</option>
+                                        })
+                                    }
+                                    </select>
+                                <br />
+                                <br />
+                                <input className="button" value="Submit Edit" type="submit"></input>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
             </div>
         )
     }
 }
-
-<select name="cars">
-  <option value="volvo">Volvo</option>
-  <option value="saab">Saab</option>
-  <option value="fiat">Fiat</option>
-  <option value="audi">Audi</option>
-</select>

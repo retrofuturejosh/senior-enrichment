@@ -1,13 +1,15 @@
 import React from 'react';
 import Home from './Home';
-import { Link } from 'react-router-dom';
+import { Link, browserHistory } from 'react-router-dom';
 
 const CampusRemoved = (props) => {
   return (
-    <div>
-      <h1>
-        REMOVED {props.match.params.name} CAMPUS
-      </h1>
+    <div id="current-component">
+        <div id="component-removed">
+          <h1>
+            REMOVED {props.match.params.name} CAMPUS
+          </h1>
+        </div>
     </div>
   );
 }

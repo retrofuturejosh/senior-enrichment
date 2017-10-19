@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, browserHistory } from 'react-router-dom';
 import { Redirect } from 'react-router';
 
 let savedCampusName;
@@ -113,38 +113,62 @@ export default class SingleCampus extends Component {
         }
         
         return (
-            <div>
-                <div>
-                    <h1>{this.state.campus.name}</h1>
-                    <img src={this.state.campus.image} style={{"maxWidth": "300px", "maxHeight": "300px"}} />
-                    <div style={{"width": "50%"}}>
-                        <h3>STUDENTS</h3>
-                        <div>
-                        <ul> 
-                            {
-                            this.state.students.map((student, idx) => {
-                                return (
-                                    <div key={student.id + 'd'}>
-                                    <li key={student.id}>
-                                        <Link to={`/student/${student.id}`} key={student.id}>
-                                            {student.name}
-                                        </Link> 
-                                        <button onClick={this.removeFromCampus} value={student.id} key={student.id + 'a'} style={{float: "right"}}>
-                                        Remove from Campus
-                                        </button>
-                                        
-                                    </li>
-                                    <br />
-                                    </div>
-                                )})
-                            }
-                        </ul>
-                        </div>
-                    </div>
+            <div id="current-component">
+                <div id="singlecampus-top">
+                    <h1 id="campus-header">{this.state.campus.name}</h1>
+                    <button id="campus-button-delete" className="float-right" onClick={this.handleDelete}> DELETE CAMPUS </button>
+                    <Link to={`/campus/edit/${this.state.campus.id}`}><button id="campus-button" className="float-right"> EDIT CAMPUS </button> </Link>
                 </div>
 
-                <div>
-                    <h2>Add Student</h2>
+
+                <div id="singlecampus-body">
+                    <img id="campus-image" src={this.state.campus.image} />
+                        <div id="student-list">
+                            <div id="campus-student-list">
+
+
+                {
+                    (this.state.students.length) ? (
+                        <div>
+                        <div id="student-list-header">
+                            <h3>Enrolled Students</h3>
+                        </div>
+                            <table id="single-campus-student-list"> 
+                                {
+                                this.state.students.map((student, idx) => {
+                                    return (
+                                        <tr>
+                                            <td className="student-list-td" key={student.id}>
+                                                <Link to={`/student/${student.id}`} key={student.id}>
+                                                    {student.name}
+                                                </Link> 
+                                            </td>
+                                            <td>
+                                                <button id="student-list-button" onClick={this.removeFromCampus} value={student.id} key={student.id + 'a'}>
+                                                Remove from Campus
+                                                </button>
+                                                
+                                            </td>
+                                        </tr>
+                                    )})
+                                }
+                            </table>
+                        </div>
+                    ) : (
+                        <h4>No Students Enrolled</h4>
+                    )
+                }
+
+                            </div>
+                        </div>
+
+                </div>
+
+
+                <br/>
+
+                <div id="campus-add-student">
+                    <h3>Add Student</h3>
                     <form onSubmit={this.handleSubmit}>
                         <fieldset>
                             <input type="text" name="firstName" placeholder="First Name" autoComplete="off"
@@ -166,19 +190,9 @@ export default class SingleCampus extends Component {
                             value={this.state.gpa}></input>
                             <br />
                             <br />
-                            <input type="submit"></input>
+                            <input className="button" type="submit"></input>
                         </fieldset>
                     </form>
-                </div>
-                <br />
-                <br />
-                <div>
-                    <Link to={`/campus/edit/${this.state.campus.id}`}><button> EDIT CAMPUS </button> </Link>
-                </div>
-                <br />
-                <br />
-                <div>
-                    <button onClick={this.handleDelete}> DELETE CAMPUS </button>
                 </div>
             </div>
             )

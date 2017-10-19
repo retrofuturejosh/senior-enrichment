@@ -54,21 +54,23 @@ export default class EditCampus extends Component {
             return <Redirect to={`/campus/${this.state.campus.id}`} />
         }
         return (
-            <div>
-                <h2>Edit <Link to={`/campus/${this.state.campus.id}`}>{this.state.campus.name}</Link></h2>
+            <div id="current-component">
+                <div id="campus-editor">
+                <h2><Link to={`/campus/${this.state.campus.id}`}>{this.state.campus.name}</Link></h2>
                 <form onSubmit={this.handleSubmit}>
                     <fieldset>
-                        Campus Name
-                        <br />
+                        <h4>Campus Name</h4>
                         <input style={{"width": "40%"}} type="text" name="campusName" value={this.state.campusNameEntry} autoComplete="off" onChange={(e) => this.handleChange("campusNameEntry", e)} value={this.state.campusNameEntry}></input>
                         <br />
-                        Campus Image Link
                         <br />
+                        <h4>Campus Image Link</h4>
                         <input style={{"width": "40%"}} type="text" name="campusImg" value={this.state.campusImg} autoComplete="off" onChange={(e) => this.handleChange("campusImg", e)} value={this.state.campusImg}></input>
                         <br />
-                        <input type="submit"></input>
+                        <br />
+                        <input type="submit" value="Submit Edit"></input>
                     </fieldset>
                 </form>
+                </div>
              </div>
         )
     }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, browserHistory } from 'react-router-dom';
 import axios from 'axios'
 
 export default class Home extends Component {
@@ -20,23 +20,34 @@ export default class Home extends Component {
 
     render() {
         return (
-            <div>
-                <h1>HOME</h1>
+            <div id="current-component">
                 <div>
-                <h2>Campuses</h2>
-                    <ul>
+                <div id="campus-top">
+                <h3 id="campus-float">Campuses</h3>
+                <Link to="/campus"><button id="float-right">Add Campus</button></Link>
+                </div>
+                <br />
+                    <table id="campus-table" style={{"width": "75%"}}>
+                        <tr>
+                            <th>Campus</th>
+                            <th>Edit Campus</th>
+                            <th>Add/Remove Students</th>
+                        </tr>
                         {
                             this.state.campuses.map(campus => {
                                 return (
-                                    <li key={campus.id} ><Link to={`/campus/${campus.id}`}>{ campus.name }</Link></li>
+                                    <tr id={campus.id}>
+                                        <td key={campus.id} ><Link to={`/campus/${campus.id}`}>{ campus.name }</Link></td>
+                                        <td><Link to={`/campus/edit/${campus.id}`}><button >Edit Campus</button></Link></td>
+                                        <td><Link to={`/campus/${campus.id}`}><button >Add/Remove</button></Link></td>
+                                    </tr>
                                 )
                             }
                         )}
-                    </ul>
+                    </table>
                 </div>
-                <div>
-                    <Link to="/campus"><button>Add Campus</button></Link>
-                </div>
+                <br />
+                <br />
             </div>
         )
     }
