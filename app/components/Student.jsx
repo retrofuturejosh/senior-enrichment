@@ -56,11 +56,18 @@ export default class Campus extends Component {
         let filteredStudents
         this.setState({searchfield: e.target.value}, () => {
             filteredStudents = this.state.students.filter(student => {
-                if (student.name.toLowerCase().includes(this.state.searchfield.toLowerCase()) ||
+                if (student.campus){
+                    if (student.name.toLowerCase().includes(this.state.searchfield.toLowerCase()) ||
                     student.campus.name.toLowerCase().includes(this.state.searchfield.toLowerCase()) ||
                     student.email.toLowerCase().includes(this.state.searchfield.toLowerCase())){
                         return student
                     }
+                } else {
+                    if (student.name.toLowerCase().includes(this.state.searchfield.toLowerCase()) ||
+                    student.email.toLowerCase().includes(this.state.searchfield.toLowerCase())){
+                        return student
+                    }
+                }
             })
             this.setState({filteredStudents});
         })
