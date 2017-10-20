@@ -53,9 +53,9 @@ class Home extends Component {
                     <table id="campus-table" style={{ "width": "75%" }}>
                         <thead>
                         <tr>
-                            <th>Campus</th>
-                            <th>Edit Campus Info</th>
-                            <th>Add/Remove Students</th>
+                            <th id="campus-margin">Campus</th>
+                            <th >Edit Campus Info</th>
+                            <th id="float-right">Add/Remove Students</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -63,9 +63,9 @@ class Home extends Component {
                             this.state.campuses.map(campus => {
                                 return (
                                     <tr key={campus.id}>
-                                        <td key={campus.id} ><Link to={`/campus/${campus.id}`}>{campus.name}</Link></td>
-                                        <td><Link to={`/campus/edit/${campus.id}`}><button >Edit Campus</button></Link></td>
-                                        <td><Link to={`/campus/${campus.id}`}><button >Add/Remove</button></Link></td>
+                                        <td key={campus.id} id="campus-margin"><Link to={`/campus/${campus.id}`}>{campus.name}</Link></td>
+                                        <td><Link to={`/campus/edit/${campus.id}`}><button id="float-right-margin">Edit</button></Link></td>
+                                        <td><Link to={`/campus/${campus.id}`}><button id="float-right">Add/Remove</button></Link></td>
                                     </tr>
                                 )
                             }

@@ -78,40 +78,42 @@ export default class AddStudent extends Component {
             <div id="add-student-component">
                 <h2>Add Student</h2>
                 <form onSubmit={this.handleSubmit}>
-                    <fieldset>
-                        <input id="expand-input" type="text" name="firstName" placeholder="First Name" autoComplete="off"
-                            onChange={(e) => this.handleChange("firstName", e)}
-                            value={this.state.firstName}></input>
-                        <br />
-                        <br />
-                        <input id="expand-input" type="text" name="lastName" placeholder="Last Name" autoComplete="off"
-                            onChange={(e) => this.handleChange("lastName", e)}
-                            value={this.state.lastName}></input>
-                        <br />
-                        <br />
-                        <input id="expand-input" type="text" name="email" placeholder="Email" autoComplete="off"
-                            onChange={(e) => this.handleChange("email", e)}
-                            value={this.state.email}></input>
-                        <br />
-                        <br />
-                        <input id="expand-input" type="number" step="0.01" name="GPA" placeholder="GPA" autoComplete="off" onChange={(e) => this.handleChange("gpa", e)}
-                            value={this.state.gpa}></input>
-                        <br />
-                        <br />
-                        <select id="expand-input" name="campus" onChange={(e) => this.handleChange("campusId", e)}>
-                            <option value="" disabled selected>Select Campus</option>
-                            {
-                                this.state.campuses.map(campus => {
-                                    return <option value={campus.id} key={campus.id}>{campus.name}</option>
-                                })
-                            }
-                        </select>
-                        <br />
-                        <br />
-                        <input id="expand-input" className="button" type="submit"></input>
-                        <br />
-                        <br />
-                    </fieldset>
+                    <div id="add-field-box">
+                        <fieldset id="add-field-box">
+                            <input id="expand-input" type="text" name="firstName" placeholder="First Name" autoComplete="off"
+                                onChange={(e) => this.handleChange("firstName", e)}
+                                value={this.state.firstName}></input>
+                            <br />
+                            <br />
+                            <input id="expand-input" type="text" name="lastName" placeholder="Last Name" autoComplete="off"
+                                onChange={(e) => this.handleChange("lastName", e)}
+                                value={this.state.lastName}></input>
+                            <br />
+                            <br />
+                            <input id="expand-input" type="text" name="email" placeholder="Email" autoComplete="off"
+                                onChange={(e) => this.handleChange("email", e)}
+                                value={this.state.email}></input>
+                            <br />
+                            <br />
+                            <input id="expand-input" type="number" step="0.01" name="GPA" placeholder="GPA" autoComplete="off" onChange={(e) => this.handleChange("gpa", e)}
+                                value={this.state.gpa}></input>
+                            <br />
+                            <br />
+                            <select id="expand-input" name="campus" onChange={(e) => this.handleChange("campusId", e)}>
+                                <option value="" disabled selected>Select Campus</option>
+                                {
+                                    this.state.campuses.map(campus => {
+                                        return <option value={campus.id} key={campus.id}>{campus.name}</option>
+                                    })
+                                }
+                            </select>
+                            <br />
+                            <br />
+                            <input id="expand-input" className="button" type="submit"></input>
+                            <br />
+                            <br />
+                        </fieldset>
+                    </div>
                     {
                         (this.state.errors) ? (
                             <div>

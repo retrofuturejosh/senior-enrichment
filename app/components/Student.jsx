@@ -7,17 +7,20 @@ export default class Campus extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            students: []
+            students: [],
+            filteredStudents: [],
+            searchfield: '',
         }
         this.handleDelete = this.handleDelete.bind(this);
         this.fetchStudents = this.fetchStudents.bind(this);
         this.organizeStudents = this.organizeStudents.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
         let fetchPromise = this.fetchStudents();
         fetchPromise.then(students => {
-            this.setState({ students })
+            this.setState({ students, filteredStudents: students })
         })
     }
 
@@ -28,6 +31,7 @@ export default class Campus extends Component {
             .then(student => {
                 this.fetchStudents();
             })
+        this.setState({searchfield: ''})
     }
 
     fetchStudents() {
@@ -35,7 +39,7 @@ export default class Campus extends Component {
             .then(res => res.data)
             .then(students => {
                 this.organizeStudents(students);
-                this.setState({ students })
+                this.setState({ students, filteredStudents: students })
                 return students;
             })
     }
@@ -48,6 +52,20 @@ export default class Campus extends Component {
         });
     }
 
+    handleChange (e) {
+        let filteredStudents
+        this.setState({searchfield: e.target.value}, () => {
+            filteredStudents = this.state.students.filter(student => {
+                if (student.name.toLowerCase().includes(this.state.searchfield.toLowerCase()) ||
+                    student.campus.name.toLowerCase().includes(this.state.searchfield.toLowerCase()) ||
+                    student.email.toLowerCase().includes(this.state.searchfield.toLowerCase())){
+                        return student
+                    }
+            })
+            this.setState({filteredStudents});
+        })
+    }
+
     render(props) {
 
         return (
@@ -57,11 +75,17 @@ export default class Campus extends Component {
                         <AddStudent fetchStudents={this.fetchStudents} />
                     </div>
                     <br />
+                    <div id="student-header">
+                        <h1>Students</h1>
+                    </div>
+                    <div id="search-component">
+                        <form id="search-form">
+                            <input id="search-form-input" type="test" value={this.state.searchfield} onChange={this.handleChange} placeholder="Search Students" />
+                        </form>
+                    </div>
+                    <br />
 
                     <div id="student-table">
-                        <div>
-                            <h1>Students</h1>
-                        </div>
                         <table style={{ width: "95%" }}>
                             <thead>
                                 <tr>
@@ -74,15 +98,15 @@ export default class Campus extends Component {
                             </thead>
                             <tbody>
                             {
-                                this.state.students.map(student => {
+                                this.state.filteredStudents.map(student => {
                                     if (student.campus) {
                                         return (
                                             <tr key={student.id}>
                                                 <td key={student.id} ><Link to={`/student/${student.id}`}>{student.name}</Link></td>
                                                 <td><Link to={`/campus/${student.campusId}`}>{student.campus.name} </Link></td>
                                                 <td><a href={`mailto:${student.email}`}>{student.email}</a></td>
-                                                <td><Link to={`/student/edit/${student.id}`}><button> EDIT STUDENT </button></Link></td>
-                                                <td><button id="delete-student-button" value={student.id} onClick={this.handleDelete}> DELETE STUDENT </button></td>
+                                                <td><Link to={`/student/edit/${student.id}`}><button>EDIT</button></Link></td>
+                                                <td><button id="delete-student-button" value={student.id} onClick={this.handleDelete}>DELETE</button></td>
                                             </tr>
                                         )
                                     } else {
@@ -91,8 +115,8 @@ export default class Campus extends Component {
                                                 <td key={student.id} ><Link to={`/student/${student.id}`}>{student.name}</Link></td>
                                                 <td>No Campus Assigned</td>
                                                 <td><a href={`mailto:${student.email}`}>{student.email}</a></td>
-                                                <td><Link to={`/student/edit/${student.id}`}><button> EDIT STUDENT </button></Link></td>
-                                                <td><button id="delete-student-button" value={student.id} onClick={this.handleDelete}> DELETE STUDENT </button></td>
+                                                <td><Link to={`/student/edit/${student.id}`}><button>EDIT</button></Link></td>
+                                                <td><button id="delete-student-button" value={student.id} onClick={this.handleDelete}>DELETE</button></td>
                                             </tr>
                                         )
                                     }
